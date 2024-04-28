@@ -46,6 +46,8 @@ Main (unreleased)
 - Flow: Fix an issue where `faro.receiver`'s `extra_log_labels` with empty value don't
   map existing value in log line. (@hainenber)
 
+- Log underlying error when HTTP server fails to start. (@hainenber)
+
 ### Other changes
 
 - Update `alloy-mixin` to use more specific alert group names (for example,

@@ -151,10 +151,14 @@ func (s *Service) Run(ctx context.Context, host service.Host) error {
 
 	netLis, err := net.Listen("tcp", s.opts.HTTPListenAddr)
 	if err != nil {
-		return fmt.Errorf("failed to listen on %s: %w", s.opts.HTTPListenAddr, err)
+		startErr := fmt.Errorf("failed to listen on %s: %w", s.opts.HTTPListenAddr, err)
+		level.Error(s.log).Log("msg", "failed to start HTTP server", "err", startErr.Error())
+		return startErr
 	}
 	if err := s.tcpLis.SetInner(netLis); err != nil {
-		return fmt.Errorf("failed to use listener: %w", err)
+		startErr := fmt.Errorf("failed to use listener: %w", err)
+		level.Error(s.log).Log("msg", "failed to start HTTP server", "err", startErr.Error())
+		return startErr
 	}
 
 	r := mux.NewRouter()
